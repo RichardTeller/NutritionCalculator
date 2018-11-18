@@ -1,0 +1,66 @@
+﻿<Window x:Class="NutritionCalculator.AddIngredientWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NutritionCalculator"
+        mc:Ignorable="d"
+        Title="Add New Ingredient" Height="352" Width="437" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Closing="Window_Closing" Icon="broccoli.png">
+
+    <DockPanel Margin="0">
+        <Label Content="Enter the ingredient properties:" Margin="10,10,0,0" VerticalAlignment="Top" DockPanel.Dock="Top" HorizontalAlignment="Left" Padding="0"/>
+        <Separator DockPanel.Dock="Top" Height="10" Margin="10,0,0,10" Width="250" HorizontalAlignment="Left" />
+        <Grid Margin="0" DockPanel.Dock="Left" Width="210">
+            <Label Content="Name:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="20" Padding="0" Width="35"/>
+            <Label Content="Serving Size:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Padding="0"/>
+            <Label Content="Servings per Container:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <Label Content="Calories:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <Label Content="Fat:" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <Label Content="Saturated Fat:" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <Label Content="Trans Fat:" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <ComboBox x:Name="comboBox_ServingMsr" HorizontalAlignment="Right" Margin="0,35,10,0" VerticalAlignment="Top" Width="65" Height="20" Padding="2,0,0,0">
+                <ComboBoxItem Content="tsp."/>
+                <ComboBoxItem Content="tbsp."/>
+                <ComboBoxItem Content="fl oz"/>
+                <ComboBoxItem Content="cup"/>
+                <ComboBoxItem Content="pint"/>
+                <ComboBoxItem Content="quart"/>
+                <ComboBoxItem Content="gallon"/>
+                <ComboBoxItem Content="ml"/>
+                <ComboBoxItem Content="liter"/>
+                <Separator Margin="0,5"/>
+                <ComboBoxItem Content="oz"/>
+                <ComboBoxItem Content="mg"/>
+                <ComboBoxItem Content="g"/>
+                <ComboBoxItem Content="kg"/>
+            </ComboBox>
+            <TextBox x:Name="textBox_Name" HorizontalAlignment="Right" Height="20" Margin="0,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135" HorizontalContentAlignment="Right"/>
+            <TextBox x:Name="textBox_ServingQty" HorizontalAlignment="Left" Height="20" Margin="86,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" Padding="0" HorizontalContentAlignment="Right"/>
+            <TextBox x:Name="textBox_ServingPerContainer" HorizontalAlignment="Right" Height="20" Margin="0,60,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47" Padding="0" HorizontalContentAlignment="Right"/>
+            <TextBox x:Name="textBox_Calories" HorizontalAlignment="Right" Height="20" Margin="0,85,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" Padding="0" HorizontalContentAlignment="Right"/>
+            <TextBox x:Name="textBox_Fat" HorizontalAlignment="Right" Height="20" Margin="0,110,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="152" Padding="0" HorizontalContentAlignment="Right"/>
+            <TextBox x:Name="textBox_SatFat" HorizontalAlignment="Right" Height="20" Margin="0,135,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="97" Padding="0" HorizontalContentAlignment="Right"/>
+            <TextBox x:Name="textBox_TransFat" HorizontalAlignment="Right" Height="20" Margin="0,160,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="121" Padding="0" HorizontalContentAlignment="Right"/>
+        </Grid>
+        <Grid Margin="0" DockPanel.Dock="Right" Width="220" HorizontalAlignment="Right">
+            <Label Content="Sodium:" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <Label Content="Total Carbohydrates:" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <Label Content="Fiber:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <Label Content="Sugar:" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <Label Content="Protein:" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <Label Content="Price per package:" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <Button x:Name="button_Confirm" Content="Confirm" HorizontalAlignment="Left" Margin="10,0,0,20" VerticalAlignment="Bottom" Width="75" Click="button_Confirm_Click"/>
+            <Button x:Name="button_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="99,0,0,20" VerticalAlignment="Bottom" Width="75" Click="button_Cancel_Click"/>
+            <TextBox x:Name="textBox_Sodium" HorizontalAlignment="Right" Height="20" Margin="0,35,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="127" Padding="0" HorizontalContentAlignment="Right"/>
+            <TextBox x:Name="textBox_Carbs" Height="20" Margin="0,60,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="62" Padding="0" HorizontalAlignment="Right" HorizontalContentAlignment="Right"/>
+            <TextBox x:Name="textBox_Fiber" Height="20" Margin="0,85,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="0" HorizontalContentAlignment="Right" HorizontalAlignment="Right" Width="141"/>
+            <TextBox x:Name="textBox_Sugar" HorizontalAlignment="Right" Height="20" Margin="0,110,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Padding="0" HorizontalContentAlignment="Right"/>
+            <TextBox x:Name="textBox_Protein" HorizontalAlignment="Right" Height="20" Margin="0,135,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" Padding="0" HorizontalContentAlignment="Right"/>
+            <TextBox x:Name="textBox_Price" HorizontalAlignment="Right" Height="20" Margin="0,160,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" Padding="0" HorizontalContentAlignment="Right"/>
+            <Label Content="Cholesterol:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="20" Padding="0"/>
+            <TextBox x:Name="textBox_Cholesterol" HorizontalAlignment="Right" Height="20" Margin="0,10,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="107" Padding="0" HorizontalContentAlignment="Right"/>
+        </Grid>
+    </DockPanel>
+
+
+</Window>

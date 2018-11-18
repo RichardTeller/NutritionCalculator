@@ -1,0 +1,186 @@
+﻿<Window x:Class="NutritionCalculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NutritionCalculator"
+        mc:Ignorable="d"
+        Title="Nutrition Calculator" Height="485" Width="600" Closing="Window_Closing" WindowStartupLocation="CenterScreen" Icon="broccoli.png" MinWidth="600" BorderThickness="0" MinHeight="485">
+
+    <DockPanel x:Name="dockPanel" LastChildFill="True" Margin="0,0,0.333,-0.333" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ScrollViewer.CanContentScroll="True">
+        <Menu x:Name="menu" Height="18" VerticalAlignment="Top" Background="{x:Null}" Margin="0" DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem x:Name="menuItem_StartNewRecipe" Header="Start a New Recipe" Click="menuItem_StartNewRecipe_Click"/>
+                <MenuItem Header="Save...">
+                    <MenuItem x:Name="menuItem_SaveRecipeToText" Header="Save Recipe as Text File" Click="menuItem_SaveRecipeToText_Click"/>
+                </MenuItem>
+                <MenuItem Header="Load...">
+                    <MenuItem x:Name="menuItem_LoadFromCSV" Header="Import Ingredients from a CSV File" Click="menuItem_LoadFromCSV_Click"/>
+                </MenuItem>
+                <MenuItem x:Name="menuItem_Exit" Header="Exit" Click="menuItem_Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Ingredients/Recipes">
+                <MenuItem Header="Ingredients...">
+                    <MenuItem x:Name="menuItem_AddIngredient" Header="Add a New Ingredient to Archive" Click="menuItem_AddIngredient_Click"/>
+                    <MenuItem x:Name="menuItem_SearchEditIngredients" Header="Search/Edit Ingredients" Click="menuItem_SearchEditIngredients_Click"/>
+                    <MenuItem x:Name="menuItem_DisplayAllIngredients" Header="Quick Display All Ingredients" Click="menuItem_DisplayAllIngredients_Click"/>
+                    <MenuItem x:Name="menuItem_ClearIngredientDatabase" Header="Clear Ingredient Archive" Click="menuItem_ClearIngredientDatabase_Click"/>
+                </MenuItem>
+                <MenuItem Header="Recipes...">
+                    <MenuItem x:Name="menuItem_AddRecipeToArchive" Header="Add Recipe to Archive" Click="menuItem_AddRecipeToArchive_Click"/>
+                    <MenuItem x:Name="menuItem_SearchRecipes" Header="Search Recipes" Click="menuItem_SearchRecipes_Click"/>
+                    <MenuItem x:Name="menuItem_ClearRecipeDatabase" Header="Clear Recipe Archive" Click="menuItem_ClearRecipeDatabase_Click"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem x:Name="menuItem_UserManual" Header="User Manual" Click="menuItem_UserManual_Click"/>
+                <MenuItem x:Name="menuItem_About" Header="About" Click="menuItem_About_Click"/>
+            </MenuItem>
+        </Menu>
+        <Separator Height="10" VerticalAlignment="Top" DockPanel.Dock="Top" Margin="0,0,0,10"/>
+
+        <DockPanel LastChildFill="False" Width="300" HorizontalAlignment="Left" DockPanel.Dock="Left" Margin="0,0,0,80">
+            <Label Content="Ingredients" Padding="0,5,5,0" Margin="5,0,0,0" DockPanel.Dock="Top"/>
+            <Separator Height="10" Margin="5,0,0,10" Width="250" HorizontalAlignment="Left" Padding="0" DockPanel.Dock="Top"/>
+
+            <ScrollViewer VerticalAlignment="Top" Width="300" DockPanel.Dock="Top" Margin="0" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="stackPanel_Ingredients" Margin="0" ScrollViewer.CanContentScroll="True" Width="300" />
+            </ScrollViewer>
+        </DockPanel>
+        <StackPanel x:Name="stackPanel_NutritionRecipe" Width="250" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="0,0,0,80">
+            <Grid>
+                <Label x:Name="label_NutritionFacts" Content="Nutrition Facts" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left" MouseDown="label_NutritionFacts_MouseDown"/>
+                <Label Content="/" HorizontalAlignment="Left" Margin="85,0,0,0" VerticalAlignment="Top" Padding="0,5,5,0"/>
+                <Label x:Name="label_Recipe" Content="Recipe" HorizontalAlignment="Left" Margin="92,0,0,0" VerticalAlignment="Top" Padding="0,5,5,0" MouseDown="label_Recipe_MouseDown" Background="White" Opacity="0.6"/>
+            </Grid>
+            <Separator Height="10" Margin="5,0,0,10" Width="200" HorizontalAlignment="Left" Padding="0"/>
+            <Grid x:Name="grid_AmtPerServingRecipeToggle" Margin="0,0,0,10">
+                <Label Content="Amount per" Padding="0,0,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                <Label x:Name="label_TogglePerServing" Content="Serving" Padding="0,0,5,0" Margin="72,0,0,0" HorizontalAlignment="Left" MouseDown="label_TogglePerServing_MouseDown"/>
+                <Label Content="/" Padding="0,0,5,0" Margin="114,0,0,0" HorizontalAlignment="Left"/>
+                <Label x:Name="label_TogglePerRecipe" Content="Recipe" Padding="0,0,5,0" Margin="122,0,0,0" HorizontalAlignment="Left" Opacity="0.6" MouseDown="label_TogglePerRecipe_MouseDown"/>
+            </Grid>
+            <StackPanel x:Name="stackPanel_NutritionLabelPerServing" Width="250">
+                <Grid>
+                    <Label Content="Calories" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_ServingCalories" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Total Fat" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_ServingFat" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Separator Height="10" Margin="5,0,0,0" Width="150" HorizontalAlignment="Left" Padding="0"/>
+                <Grid>
+                    <Label Content="Saturated Fat" Padding="0,0,5,0" Margin="15,0,0,0" HorizontalAlignment="Left" BorderThickness="0"/>
+                    <Label x:Name="label_ServingSatFat" Content="-" Padding="0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Trans Fat" Padding="0,5,5,0" Margin="15,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_ServingTransFat" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Cholesterol" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_ServingCholesterol" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Sodium" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_ServingSodium" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Total Carbohydrate" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_ServingCarbs" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Separator Height="10" Margin="5,0,0,0" Width="150" HorizontalAlignment="Left" Padding="0"/>
+                <Grid>
+                    <Label Content="Dietary Fiber" Padding="0,0,5,0" Margin="15,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_ServingFiber" Content="-" Padding="0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Sugars" Padding="0,5,5,0" Margin="15,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_ServingSugar" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Protein" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_ServingProtein" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid Margin="0,15,0,0">
+                    <Label Content="Price" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_ServingPrice" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel x:Name="stackPanel_NutritionLabelPerRecipe" Width="250" Visibility="Collapsed">
+                <Grid>
+                    <Label Content="Calories" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_RecipeCalories" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Total Fat" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_RecipeFat" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Separator Height="10" Margin="5,0,0,0" Width="150" HorizontalAlignment="Left" Padding="0"/>
+                <Grid>
+                    <Label Content="Saturated Fat" Padding="0,0,5,0" Margin="15,0,0,0" HorizontalAlignment="Left" BorderThickness="0"/>
+                    <Label x:Name="label_RecipeSatFat" Content="-" Padding="0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Trans Fat" Padding="0,5,5,0" Margin="15,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_RecipeTransFat" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Cholesterol" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_RecipeCholesterol" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Sodium" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_RecipeSodium" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Total Carbohydrate" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_RecipeCarbs" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Separator Height="10" Margin="5,0,0,0" Width="150" HorizontalAlignment="Left" Padding="0"/>
+                <Grid>
+                    <Label Content="Dietary Fiber" Padding="0,0,5,0" Margin="15,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_RecipeFiber" Content="-" Padding="0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Sugars" Padding="0,5,5,0" Margin="15,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_RecipeSugar" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid>
+                    <Label Content="Protein" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_RecipeProtein" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+                <Grid Margin="0,15,0,0">
+                    <Label Content="Price" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                    <Label x:Name="label_RecipePrice" Content="-" Padding="0,5,0,0" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+                </Grid>
+            </StackPanel>
+            <DockPanel x:Name="dockPanel_Recipe" Width="250" Visibility="Collapsed">
+                <ScrollViewer Width="250" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" Height="252">
+                    <StackPanel>
+                        <TextBox x:Name="textBox_RecipeName" Text="Add a Recipe Name (Click me)" BorderThickness="0" Padding="0,5,5,0" Margin="3,0,0,15" UseLayoutRounding="False" TextWrapping="Wrap"/>
+                        <Label Content="Ingredients" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                        <Separator Height="10" Margin="5,0,0,0" Width="150" HorizontalAlignment="Left" Padding="0"/>
+                        <TextBox x:Name="textBox_RecipeIngredients" Text="Ingredients will be added here." BorderThickness="0" Padding="0,0,5,0" Margin="3,0,0,15" UseLayoutRounding="False" TextWrapping="Wrap" AcceptsReturn="True"/>
+                        <Label Content="Directions" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                        <Separator Height="10" Margin="5,0,0,0" Width="150" HorizontalAlignment="Left" Padding="0"/>
+                        <TextBox x:Name="textBox_RecipeDirections" Text="Add directions here." BorderThickness="0" Padding="0,0,5,0" Margin="3,0,0,15" TextWrapping="Wrap" AcceptsReturn="True"/>
+                        <Label Content="Notes" Padding="0,5,5,0" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                        <Separator Height="10" Margin="5,0,0,0" Width="150" HorizontalAlignment="Left" Padding="0"/>
+                        <TextBox x:Name="textBox_RecipeNotes" Text="Add notes here." BorderThickness="0" Padding="0,0,5,0" Margin="3,0,0,15" TextWrapping="Wrap" AcceptsReturn="True"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </DockPanel>
+        </StackPanel>
+        <Grid Height="80" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" MinWidth="590" Margin="-300,0,-250,0">
+            <TextBox x:Name="textBox_NumberServingsMade" TextWrapping="Wrap" Margin="250,15,0,0" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="0" Height="20"/>
+            <Label Content="How many servings does this make?" HorizontalAlignment="Left" Margin="32,15,0,0" VerticalAlignment="Top" Width="201" Height="20" Padding="0"/>
+            <Button x:Name="button_ConfirmIngredients" Content="Confirm Ingredients" HorizontalAlignment="Left" Margin="180,50,0,0" VerticalAlignment="Top" Width="120" Click="button_ConfirmIngredients_Click"/>
+            <Button x:Name="button_AddAnotherIngredient" Content="Add Another Ingredient" HorizontalAlignment="Left" Margin="32,50,0,0" VerticalAlignment="Top" Click="button_AddAnotherIngredient_Click" Width="140"/>
+            <Separator Margin="5,5,0,0" Width="250" HorizontalAlignment="Left" Padding="0" VerticalAlignment="Top"/>
+        </Grid>
+
+
+    </DockPanel>
+</Window>
